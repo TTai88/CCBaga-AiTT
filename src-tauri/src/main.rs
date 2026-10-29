@@ -18,6 +18,7 @@ mod progress;
 mod regions;
 mod system;
 mod ui_language;
+mod theme_loader;
 #[cfg(test)]
 mod updater_tests;
 #[cfg(target_os = "windows")]
@@ -170,7 +171,8 @@ fn main() {
             browser::browser_set_default,
             browser::browser_rotate,
             network_links::network_open_resource,
-            network_links::network_diagnose_domains
+            network_links::network_diagnose_domains,
+            theme_loader::load_external_theme
         ])
         .build(tauri::generate_context!())
         .expect("无法启动 CCBaga-A")

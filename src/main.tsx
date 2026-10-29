@@ -18,6 +18,7 @@ import { VpsPanel } from './vps';
 import { LanguageSwitch } from './language-switch';
 import { AppUpdate } from './app-update';
 import { HelpPanel } from './help';
+import { useExternalTheme } from './theme-engine';
 import appLogo from '../assets/cleaner-logo.jpg';
 import './index.css';
 import './style.css';
@@ -25,6 +26,7 @@ type Page = 'quick' | 'cleaner' | 'browser' | 'system' | 'vps' | 'help';
 const titles: Record<Page, string> = { quick: '傻瓜设置', cleaner: 'Claude 身份管理', browser: '浏览器环境', system: '电脑环境', vps: '网络环境', help: '使用说明' };
 const icons: Record<Page, typeof HomeIcon> = { quick: HomeIcon, cleaner: IdentityIcon, browser: BrowserIcon, system: SettingsIcon, vps: NetworkIcon, help: HelpIcon };
 function App() {
+    const extTheme = useExternalTheme();
     const {t}=useI18n();
     const [emptyRequested,setEmptyRequested]=useState(false);
     const [page, setPage] = useState<Page>('quick'), [revision, setRevision] = useState(0), [advancedBusy, setAdvancedBusy] = useState(false), [updateBusy, setUpdateBusy] = useState(false);
@@ -32,7 +34,7 @@ function App() {
     const locked = quick.busy || advancedBusy || updateBusy;
     return <><div className="drag-strip" onMouseDown={e => { if (e.button === 0)
         void getCurrentWindow().startDragging(); }}/><div className="app-shell"><aside className="app-sidebar">
-    <div className="app-brand"><img src={appLogo} width={28} height={28} alt="" draggable={false} className="rounded-xl"/><strong>{t("BAGA!")}</strong></div>
+    <div className="app-brand"><img src={extTheme.logo || appLogo} width={28} height={28} alt="" draggable={false} className="rounded-xl"/><strong>{extTheme.title || t("BAGA!")}</strong></div>
     <nav aria-label={t("主要页面")}>{(['quick', 'vps', 'cleaner', 'browser', 'system', 'help'] as const).map(p => { const Icon = icons[p]; return <Fragment key={p}>{(p==='vps'||p==='help')&&<hr className="nav-divider"/>}<NavButton className="workspace-nav" active={page === p} aria-current={page === p ? "page" : undefined} disabled={locked} icon={<Icon size={18} aria-hidden="true"/>} onClick={() => {setEmptyRequested(false);setPage(p);}}>{t(titles[p])}</NavButton></Fragment>; })}</nav>
     <div className="sidebar-bottom"><AppUpdate blocked={quick.busy || advancedBusy} onBusy={setUpdateBusy}/><LanguageSwitch /></div>
   </aside><Panel frame className="workspace" inert={updateBusy}><fieldset disabled={advancedBusy} className={`cleaner-slot quick-fieldset ${page !== 'quick' ? 'page-hidden' : ''}`}>{quick.content}</fieldset>

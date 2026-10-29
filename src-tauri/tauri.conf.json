@@ -13,14 +13,17 @@
     "windows": [
       {
         "label": "main",
-        "title": "CCBaga-A",
-        "width": 1040,
+        "title": "Ai TT出差助手",
+        "width": 1100,
         "height": 820,
-        "minWidth": 760,
+        "minWidth": 960,
         "minHeight": 640,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true,
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#F3F5F8",
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true
       }
     ],
     "security": {

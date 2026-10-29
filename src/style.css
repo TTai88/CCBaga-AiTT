@@ -565,3 +565,99 @@ h3 { margin: 0; font-size: 13px; font-weight: 500; }
 .identity-transfer-file { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--landing-line); }
 .identity-transfer-file > span { min-width:0; overflow-wrap:anywhere; font:12px ui-monospace,monospace; }
 .identity-transfer > label { margin-bottom:-10px; }
+
+/* >>> CCBAGA-SKIN >>> */
+/* ==========================================================================
+   [CCBAGA-SKIN C: EXECUTIVE LIGHT · 云白]
+   Append to the END of src/style.css (loaded after index.css → wins by order).
+   Pure presentation: variables + existing class selectors only. No !important.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+  /* skin tokens */
+  --skin-canvas: #F3F5F8;
+  --skin-ambient: none;
+  --skin-sidebar: #FFFFFF;
+  --skin-card: #FFFFFF;
+  --skin-card-border: #E1E5EA;
+  --skin-card-shadow: 0 1px 2px rgba(16,24,40,.05), 0 4px 12px rgba(16,24,40,.04);
+  --skin-hover: #F1F4F8;
+  --skin-accent: #2563EB;
+  --skin-accent-soft: #EAF1FE;
+  --skin-cur-bg: linear-gradient(158deg,#22418A 0%,#1A3270 60%,#142858 100%);
+  --skin-cur-border: #1E3A7B;
+  --skin-cur-fg: #FFFFFF;
+  --skin-cur-fg2: #C3D3F5;
+  --skin-cur-shadow: 0 1px 2px rgba(16,24,40,.08), 0 12px 24px -12px rgba(30,58,138,.45);
+  --skin-led: #34D399;
+  --skin-led-glow: rgba(52,211,153,.55);
+  --skin-led-off: #E3E7EC;
+  --skin-radius: 10px;
+  /* existing app / Cromma variables */
+  --ground: #F3F5F8;
+  --background: #FFFFFF;
+  --panel: #FFFFFF;
+  --foreground: #1D2330;
+  --muted-foreground: #5F6775;
+  --border: #E1E5EA;
+  --panel-outline: #E1E5EA;
+  --accent: #F1F4F8;
+  --muted: #F3F5F8;
+  --input: #FAFBFC;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --destructive: #B42318;
+  --destructive-foreground: #FFFFFF;
+  --ring: #2563EB;
+  --landing-line: #E6E9ED;
+  --landing-hatch: none;
+  --landing-dots: none;
+}
+
+/* 1 · Canvas & shell */
+body, .drag-strip { background: var(--skin-canvas); }
+.drag-strip { border-bottom-color: transparent; }
+.app-shell { background-color: var(--skin-canvas); background-image: var(--skin-ambient), var(--landing-hatch); }
+.app-sidebar { --sidebar: var(--skin-sidebar); --sidebar-accent: var(--skin-hover); border-color: var(--landing-line); border-radius: var(--skin-radius); }
+.workspace { border-radius: var(--skin-radius); overflow: hidden; }
+.nav-divider { border-top-color: var(--landing-line); }
+.language-switch button[aria-pressed="true"] { background: var(--primary); color: var(--primary-foreground); }
+.identity-library, .identity-cli, .claude-residue { border-image: none; }
+
+/* 2 · Identity cards (keeps original 196×312 geometry) */
+.identity-card { background: var(--skin-card); border-color: var(--skin-card-border); box-shadow: var(--skin-card-shadow); transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
+.identity-card:hover { box-shadow: var(--skin-card-shadow); border-color: color-mix(in srgb, var(--skin-accent) 40%, var(--skin-card-border)); transform: translateY(-2px); }
+.identity-card.selected { border-color: var(--skin-accent); }
+.identity-card.empty { background: transparent; border-style: dashed; box-shadow: none; }
+.identity-card::before { background: var(--skin-led-off); box-shadow: none; }
+.identity-card.current, .identity-card.current:hover { color: var(--skin-cur-fg); background: var(--skin-cur-bg); border-color: var(--skin-cur-border); box-shadow: var(--skin-cur-shadow); }
+.identity-card.current::before, .identity-card.empty.selected::before { background: var(--skin-led); box-shadow: 0 0 6px var(--skin-led-glow), 0 0 14px var(--skin-led-glow); }
+.identity-avatar { background: var(--muted); border-color: var(--landing-line); }
+.empty .identity-avatar { background: transparent; }
+.current .identity-avatar { color: var(--skin-cur-fg); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); }
+.current .identity-card-badge, .current .identity-live-badge, .current .identity-organization { color: var(--skin-cur-fg2); }
+.identity-email { color: var(--skin-cur-fg); }
+.saved-account .identity-email { color: var(--foreground); }
+.identity-status-badge { background: var(--muted); border-color: var(--landing-line); }
+.identity-status-badge.auth-local_unexpired { color: #1F7A50; background: #E8F4EE; border-color: transparent; }
+.identity-status-badge.auth-refresh_available { color: #8A5A00; background: #FCF1DE; border-color: transparent; }
+.identity-status-badge.auth-expired { color: #B42318; background: #FDECEA; border-color: transparent; }
+.current .identity-status-badge { color: var(--skin-cur-fg2); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); }
+.current .identity-card-footer > button { color: #171717; background: #FFFFFF; border-color: transparent; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.current .identity-card-footer > button:last-child { color: var(--skin-cur-fg); background: transparent; border-color: rgba(255,255,255,.22); box-shadow: none; }
+.identity-card-rail::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted-foreground) 35%, transparent); }
+
+/* 3 · Grids, quick actions, verification states */
+.quick-buttons button:hover { background: var(--skin-hover); }
+.browser-verification-page { --verification-bg: #FDF1F0; --verification-color: #B42318; }
+.browser-verification-page.is-checking { --verification-bg: #FFF8E6; --verification-color: #8A5A00; }
+.browser-verification-page.is-passed { --verification-bg: #EAF6EF; --verification-color: #1F7A50; }
+
+/* 4 · Focus, selection, scrollbars, motion */
+button:focus-visible, summary:focus-visible { outline-color: var(--skin-accent); }
+::selection { background: var(--skin-accent-soft); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted-foreground) 30%, transparent); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+@media (prefers-reduced-motion: reduce) { .identity-card, .identity-card:hover { transition: none; transform: none; } }
+/* <<< CCBAGA-SKIN <<< */
